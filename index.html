@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2022.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Transpositor de Acordes con Notas&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f9f9f9;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 10px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1, h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #555;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="text"], select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #28a745;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 14px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #218838;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.output, .single-chord-output {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #e9ecef;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.output strong, .single-chord-output strong {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.transposed-chords {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chord-container, .single-chord-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: calc(50% - 15px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chord-container h3, .single-chord-container h3 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 0 10px 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #007bff;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chord-notes, .single-chord-notes {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style-type: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chord-notes li, .single-chord-notes li {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f1f1f1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 5px 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 800px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chord-container, .single-chord-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Estilos para la sección de análisis de acordes individuales */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.single-chord-section {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.single-chord-section input[type="text"] {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 70%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.single-chord-section button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 28%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: 2%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Transpositor de Acordes con Notas&lt;/h1&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Sección de Transposición de Acordes --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label for="originalChords"&gt;Acordes Originales (separados por espacios):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="originalChords" placeholder="Ejemplo: C G Am F"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label for="originalKey"&gt;Tonalidad Original:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="originalKey"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="C"&gt;C&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="C#"&gt;C# / Db&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="D"&gt;D&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="D#"&gt;D# / Eb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="E"&gt;E&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="F"&gt;F&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="F#"&gt;F# / Gb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="G"&gt;G&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="G#"&gt;G# / Ab&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="A"&gt;A&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="A#"&gt;A# / Bb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="B"&gt;B / Cb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label for="targetKey"&gt;Tonalidad Deseada:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="targetKey"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="C"&gt;C&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="C#"&gt;C# / Db&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="D"&gt;D&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="D#"&gt;D# / Eb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="E"&gt;E&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="F"&gt;F&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="F#"&gt;F# / Gb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="G"&gt;G&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="G#"&gt;G# / Ab&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="A"&gt;A&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="A#"&gt;A# / Bb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="B"&gt;B / Cb&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="transposeBtn"&gt;Transponer&lt;/button&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="output"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;strong&gt;Acordes Transpuestos:&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="transposed-chords" id="transposedChords"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;Aquí aparecerán los acordes transpuestos con sus notas.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Sección de Análisis de Acordes Individuales --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="single-chord-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Análisis de Cualquier Acorde&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label for="singleChord"&gt;Introduce un Acorde:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" id="singleChord" placeholder="Ejemplo: Em7"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="analyzeChordBtn"&gt;Obtener Notas&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="single-chord-output"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;strong&gt;Notas del Acorde:&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="single-chord-container" id="singleChordNotes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;Aquí aparecerán las notas del acorde introducido.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Orden de las notas cromáticas</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const noteOrder = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Mapeo de equivalentes enharmónicos</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const enharmonics = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Cb': 'B',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Db': 'C#',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Eb': 'D#',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Fb': 'E',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Gb': 'F#',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Ab': 'G#',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'Bb': 'A#',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'E#': 'F',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'B#': 'C'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Mapeo de acordes a intervalos (soporta más tipos de acordes)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const chordIntervals = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'maj9': [0, 4, 7, 11, 14],<span class="Apple-converted-space">      </span>// Novena mayor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'maj7': [0, 4, 7, 11],<span class="Apple-converted-space">          </span>// Séptima mayor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'maj6': [0, 4, 7, 9], <span class="Apple-converted-space">          </span>// Sexta mayor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'6': [0, 4, 7, 9],<span class="Apple-converted-space">              </span>// Sexta mayor (sin sufijo)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'maj': [0, 4, 7], <span class="Apple-converted-space">              </span>// Mayor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'': [0, 4, 7],<span class="Apple-converted-space">                  </span>// Mayor (sin sufijo)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'m7b5': [0, 3, 6, 10],<span class="Apple-converted-space">          </span>// Séptima menor con quinta disminuida</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'m9': [0, 3, 7, 10, 14],<span class="Apple-converted-space">        </span>// Novena menor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'m7': [0, 3, 7, 10],<span class="Apple-converted-space">            </span>// Séptima menor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'m6': [0, 3, 7, 9], <span class="Apple-converted-space">            </span>// Sexta menor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'m': [0, 3, 7], <span class="Apple-converted-space">                </span>// Menor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'min7': [0, 3, 7, 10],<span class="Apple-converted-space">          </span>// Séptima menor (sin abreviatura)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'dim7': [0, 3, 6, 9], <span class="Apple-converted-space">          </span>// Séptima disminuida</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'dim': [0, 3, 6], <span class="Apple-converted-space">              </span>// Disminuido</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'aug': [0, 4, 8], <span class="Apple-converted-space">              </span>// Aumentado</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'7#5': [0, 4, 8, 10], <span class="Apple-converted-space">          </span>// Séptima dominante con quinta aumentada</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'7b5': [0, 4, 6, 10], <span class="Apple-converted-space">          </span>// Séptima dominante con quinta disminuida</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'7': [0, 4, 7, 10], <span class="Apple-converted-space">            </span>// Séptima dominante</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'sus2': [0, 2, 7],<span class="Apple-converted-space">              </span>// Suspendido 2</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'sus4': [0, 5, 7],<span class="Apple-converted-space">              </span>// Suspendido 4</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'add9': [0, 4, 7, 14],<span class="Apple-converted-space">          </span>// Añade una novena</p>
+<p class="p1"><span class="Apple-converted-space">            </span>'9': [0, 4, 7, 10, 14], <span class="Apple-converted-space">        </span>// Novena dominante</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Puedes agregar más tipos de acordes aquí</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Obtiene el índice de una nota en el arreglo noteOrder,</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* manejando equivalentes enharmónicos.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {string} note - La nota a buscar.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @returns {number} - Índice de la nota o -1 si no se encuentra.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getNoteIndex(note) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (enharmonics[note]) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return noteOrder.indexOf(enharmonics[note]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return noteOrder.indexOf(note);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Transpone una única nota dado un número de semitonos.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {string} chord - El acorde a transponer.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {number} semitones - Número de semitonos para transponer.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @returns {string} - Acorde transpuesto.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function transposeChord(chord, semitones) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Extraer la raíz del acorde (ejemplo: de Am7, obtener A)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const match = chord.match(/^[A-G][b#]?/);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!match) return chord; // Si no coincide, devolver tal cual</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let root = match[0];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let suffix = chord.slice(root.length);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let index = getNoteIndex(root);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (index === -1) return chord; // Si no se encuentra la nota, devolver como está</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let transposedIndex = (index + semitones) % 12;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (transposedIndex &lt; 0) transposedIndex += 12;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let transposedRoot = noteOrder[transposedIndex];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return transposedRoot + suffix;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Obtiene las notas que componen un acorde transpuesto.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {string} chord - El acorde transpuesto.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @returns {Array} - Array de notas que componen el acorde.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getChordNotes(chord) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Determinar el tipo de acorde</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let type = 'maj'; // Por defecto mayor</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Buscar el sufijo del acorde para determinar el tipo</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Priorizar tipos más largos para evitar conflictos (e.g., 'maj9' antes que 'maj7')</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const suffixes = Object.keys(chordIntervals).sort((a, b) =&gt; b.length - a.length);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let suf of suffixes) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (suf !== '' &amp;&amp; chord.endsWith(suf)) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>type = suf;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Obtener la raíz</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const match = chord.match(/^[A-G][b#]?/);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!match) return [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let root = match[0];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let rootIndex = getNoteIndex(root);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (rootIndex === -1) return [];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Obtener las notas basadas en los intervalos</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let intervals = chordIntervals[type] || chordIntervals['maj'];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let notes = intervals.map(interval =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let noteIndex = (rootIndex + interval) % 12;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Para intervalos mayores a 12 (como 14 para la novena), ajustamos</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (interval &gt;= 12) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>noteIndex = (rootIndex + (interval % 12)) % 12;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return noteOrder[noteIndex];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return notes;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Función para manejar la transposición de acordes</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('transposeBtn').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const originalChordsInput = document.getElementById('originalChords').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const originalKey = document.getElementById('originalKey').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const targetKey = document.getElementById('targetKey').value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (originalChordsInput === '') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Por favor, introduce los acordes originales.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Calcular la diferencia en semitonos entre las dos tonalidades</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let originalIndex = getNoteIndex(originalKey);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let targetIndex = getNoteIndex(targetKey);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (originalIndex === -1 || targetIndex === -1) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Por favor, selecciona tonalidades válidas.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let semitoneDifference = targetIndex - originalIndex;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Dividir los acordes ingresados por espacios</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let originalChords = originalChordsInput.split(/\s+/);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let transposedChords = originalChords.map(chord =&gt; transposeChord(chord, semitoneDifference));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Obtener las notas de cada acorde transpuesto</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let chordsWithNotes = transposedChords.map(chord =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let notes = getChordNotes(chord);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return { chord, notes };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Generar el contenido HTML para mostrar los acordes y sus notas</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let outputHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>chordsWithNotes.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (item.notes.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputHTML += `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chord-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3&gt;${item.chord}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;ul class="chord-notes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>${item.notes.map(note =&gt; `&lt;li&gt;${note}&lt;/li&gt;`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputHTML += `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chord-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3&gt;${item.chord}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;No se pudieron determinar las notas de este acorde.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Mostrar los acordes transpuestos con sus notas</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('transposedChords').innerHTML = outputHTML;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Función para analizar un acorde individual</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('analyzeChordBtn').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const singleChordInput = document.getElementById('singleChord').value.trim();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (singleChordInput === '') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Por favor, introduce un acorde para analizar.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Transponer el acorde con semitonos = 0 para mantenerlo igual</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let transposedChord = transposeChord(singleChordInput, 0);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Obtener las notas del acorde</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let notes = getChordNotes(transposedChord);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Generar el contenido HTML para mostrar las notas del acorde</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let outputHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (notes.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>outputHTML += `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="single-chord-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;${transposedChord}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;ul class="single-chord-notes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>${notes.map(note =&gt; `&lt;li&gt;${note}&lt;/li&gt;`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>outputHTML += `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="single-chord-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;${transposedChord}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;No se pudieron determinar las notas de este acorde.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Mostrar las notas del acorde</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('singleChordNotes').innerHTML = outputHTML;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
